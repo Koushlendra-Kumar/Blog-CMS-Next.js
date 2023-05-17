@@ -12,12 +12,15 @@ git clone git@github.com:Koushlendra-Kumar/next-js-assignment.git
 ```bash
 npm install 
 ```
-
-3. Run the development server:
+3. Create a .env file and the following variable
+```bash
+MONGODB_URI=<your_mongodb_uri>
+```
+4. Run the development server:
 
 ```bash
 npm run dev
 ```
 
-4. Finally, Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+5. Finally, Open [http://localhost:3000](http://localhost:3000) in your browser.
 
