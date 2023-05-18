@@ -1,19 +1,25 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BlogForm from "@components/BlogForm";
 import { useRouter } from "next/navigation";
 import getUserData from "@utils/getUserData";
 
 const BlogPage = () => {
   const router = useRouter();
-  let author = getUserData("username");
-  let authorId = getUserData("userId");
+  const [author, setAuthor] = useState('');
+  const [authorId, setAuthorId]=useState('')
   const [blog, setBlog] = useState({
     title: "",
     author: author || "",
     content: "",
   });
   const [buttonText, setButtonText] = useState("Submit");
+  useEffect(() =>{
+    let name = getUserData('username');
+    let id = getUserData('userId');
+    setAuthor(name);
+    setAuthorId(id)
+  },[])
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {

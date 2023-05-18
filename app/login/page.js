@@ -1,14 +1,18 @@
 "use client";
 
 import LoginForm from "@components/LoginForm";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 const LoginPage = () => {
   const router = useRouter();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [buttonText, setButtonText] = useState("Log in");
-
+  const [loggedIn, setLoggedIn] = useState(false)
+  const [user, setUser] = useState({
+    userId: '',
+    username: ''
+  })
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Handle login logic
@@ -28,13 +32,12 @@ const LoginPage = () => {
       console.log(userData._id);
       if (userData._id) {
         // login successful
+        setLoggedIn(true)
+        setUser({...user,username:userData.username, userId: userData._id})
         setUsername("");
         setPassword("");
         router.push("/");
-        window.sessionStorage.setItem("userId", userData._id);
-        window.sessionStorage.setItem("username", userData.username);
-        console.log(window.sessionStorage.getItem("userId"));
-        console.log(window.sessionStorage.getItem("username"));
+        
         console.log("login successful", userData);
       } else {
         // login failed
@@ -45,6 +48,12 @@ const LoginPage = () => {
       console.error("An error occurred", error);
     }
   };
+  useEffect(() => {
+    window.sessionStorage.setItem("userId", user.userId);
+        window.sessionStorage.setItem("username", user.username);
+        console.log(window.sessionStorage.getItem("userId"));
+        console.log(window.sessionStorage.getItem("username"));
+  }, [loggedIn])
   return (
     <div>
       <LoginForm
